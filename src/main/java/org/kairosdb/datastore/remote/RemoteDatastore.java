@@ -81,6 +81,9 @@ public class RemoteDatastore implements Datastore
 	@Named(METRIC_PREFIX_FILTER)
 	private String m_prefixFilter = null;
 
+	private String[] m_prefixFilterArr = null;
+
+
 	@Inject
 	private LongDataPointFactory m_longDataPointFactory = new LongDataPointFactoryImpl();
 
@@ -278,8 +281,25 @@ public class RemoteDatastore implements Datastore
 			DataPoint dataPoint, int ttl) throws DatastoreException
 	{
 		DataPointKey key = new DataPointKey(metricName, tags, dataPoint.getApiDataType(), ttl);
-		if ((m_prefixFilter != null) && (!metricName.startsWith(m_prefixFilter)))
-			return;
+
+		if (m_prefixFilter != null)
+		{
+			m_prefixFilter = m_prefixFilter.replaceAll("\\s+","");
+			m_prefixFilterArr = m_prefixFilter.split(",");
+
+			boolean prefixMatch = false;
+			for (String prefixFilter : m_prefixFilterArr)
+			{
+				if (metricName.startsWith(prefixFilter))
+				{
+					prefixMatch = true;
+					break;
+				}
+			}
+
+			if (!prefixMatch)
+				return;
+		}
 
 		synchronized (m_mapLock)
 		{
