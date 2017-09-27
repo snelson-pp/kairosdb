@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import org.h2.util.StringUtils;
 import org.kairosdb.core.datastore.ServiceKeyStore;
 import org.kairosdb.core.formatter.JsonFormatter;
-import org.kairosdb.core.http.rest.MetricsResource.ValuesStreamingOutput;
+import org.kairosdb.core.http.rest.QueryResource.ValuesStreamingOutput;
 import org.kairosdb.core.http.rest.json.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +22,7 @@ import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.Response.Status;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.kairosdb.core.http.rest.MetricsResource.setHeaders;
+import static org.kairosdb.core.http.rest.DefaultResource.setHeaders;
 
 @Path("/api/v1/metadata")
 public class MetadataResource

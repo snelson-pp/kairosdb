@@ -3,7 +3,7 @@ package org.kairosdb.core.health;
 import com.codahale.metrics.health.HealthCheck;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
-import org.kairosdb.core.http.rest.MetricsResource;
+import org.kairosdb.core.http.rest.DefaultResource;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.GenericEntity;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.kairosdb.core.http.rest.MetricsResource.setHeaders;
+import static org.kairosdb.core.http.rest.DefaultResource.setHeaders;
 
 /**
  Provides REST APIs for health checks
@@ -40,7 +40,7 @@ public class HealthCheckResource
 	public Response corsPreflightCheck(@HeaderParam("Access-Control-Request-Headers") String requestHeaders,
 			@HeaderParam("Access-Control-Request-Method") String requestMethod)
 	{
-		Response.ResponseBuilder responseBuilder = MetricsResource.getCorsPreflightResponseBuilder(requestHeaders, requestMethod);
+		Response.ResponseBuilder responseBuilder = DefaultResource.getCorsPreflightResponseBuilder(requestHeaders, requestMethod);
 		return (responseBuilder.build());
 	}
 
@@ -73,7 +73,7 @@ public class HealthCheckResource
 	public Response corsPreflightStatus(@HeaderParam("Access-Control-Request-Headers") String requestHeaders,
 			@HeaderParam("Access-Control-Request-Method") String requestMethod)
 	{
-		Response.ResponseBuilder responseBuilder = MetricsResource.getCorsPreflightResponseBuilder(requestHeaders, requestMethod);
+		Response.ResponseBuilder responseBuilder = DefaultResource.getCorsPreflightResponseBuilder(requestHeaders, requestMethod);
 		return (responseBuilder.build());
 	}
 

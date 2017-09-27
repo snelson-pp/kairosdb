@@ -24,7 +24,7 @@ import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import org.eclipse.jetty.servlets.GzipFilter;
 import org.kairosdb.core.http.rest.FeaturesResource;
 import org.kairosdb.core.http.rest.MetadataResource;
-import org.kairosdb.core.http.rest.MetricsResource;
+import org.kairosdb.core.http.rest.DefaultResource;
 
 import javax.ws.rs.core.MediaType;
 import java.util.Properties;
@@ -45,7 +45,7 @@ public class WebServletModule extends JerseyServletModule
 		bind(WebServer.class);
 
 		//Bind resource classes here
-		bind(MetricsResource.class).in(Scopes.SINGLETON);
+		bind(DefaultResource.class).in(Scopes.SINGLETON);
         bind(MetadataResource.class).in(Scopes.SINGLETON);
 		bind(FeaturesResource.class).in(Scopes.SINGLETON);
 

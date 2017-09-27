@@ -20,13 +20,13 @@ import javax.ws.rs.core.Response.Status;
 import java.util.List;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static org.kairosdb.core.http.rest.MetricsResource.setHeaders;
+import static org.kairosdb.core.http.rest.DefaultResource.setHeaders;
 import static org.kairosdb.util.Preconditions.checkNotNullOrEmpty;
 
 @Path("/api/v1/rollups")
 public class RollUpResource
 {
-	private static final Logger logger = LoggerFactory.getLogger(MetricsResource.class);
+	private static final Logger logger = LoggerFactory.getLogger(DefaultResource.class);
 	static final String RESOURCE_URL = "/api/v1/rollups/";
 
 	private final QueryParser parser;

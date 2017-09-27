@@ -17,7 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import static org.kairosdb.core.http.rest.MetricsResource.setHeaders;
+import static org.kairosdb.core.http.rest.DefaultResource.setHeaders;
 
 @Path("/api/v1/features")
 public class FeaturesResource
