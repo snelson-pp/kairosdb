@@ -495,7 +495,45 @@ def doDocs(Rule rule)
         throw new TablesawException("Unable to run sphinx-build")
 }
 
+//---------------------------------------------------------------------------
+//Build container
+dockerBuild = new SimpleRule("docker-build").setDescription("Build a Docker image")
+.addDepend(tarRule)
+.setMakeAction("doDockerBuild")
 
+def doDockerBuild(Rule rule)
+{
+  def tag = getDockerTag()
+  command = "docker build -t ${tag} --build-arg VERSION=${version}-${release} ."
+  saw.exec(command)
+}
+
+def getDockerTag()
+{
+  env = System.getenv()
+
+  def registry = ""
+  
+  if ( env.containsKey("DOCKER_REGISTRY") ) {
+    registry = env.get("DOCKER_REGISTRY") + "/"
+  }
+
+  return registry + "${programName}:${version}-${release}"
+
+}
+
+//------------------------------------------------------------------------------
+// Push container
+new SimpleRule("docker-push").setDescription("Push a Docker image to registry")
+.addDepend(dockerBuild)
+.setMakeAction("doDockerPush")
+
+def doDockerPush(Rule rule)
+{
+  def tag = getDockerTag()
+  command = "docker push ${tag}"
+  saw.exec(command)
+}
 
 //------------------------------------------------------------------------------
 //==-- Maven Artifacts --==
