@@ -510,13 +510,12 @@ def doDockerBuild(Rule rule)
 
 def getDockerTag()
 {
-  env = System.getenv()
 
-  def registry = ""
-  
-  if ( env.containsKey("DOCKER_REGISTRY") ) {
-    registry = env.get("DOCKER_REGISTRY") + "/"
-  }
+	def registry = saw.getProperty("DOCKER_REGISTRY", "");
+
+	if ( registry != "" ) {
+		registry += "/"
+	}
 
   return registry + "${programName}:${version}-${release}"
 
