@@ -6,11 +6,11 @@ FROM java:openjdk-8
 
 ARG VERSION
 
-ADD build/kairosdb-${VERSION}.tar /root/
+ADD build/kairosdb-${VERSION}.tar /opt/
 
-WORKDIR /root/kairosdb
+WORKDIR /opt/kairosdb
 
-CMD ["/root/kairosdb/bin/kairosdb.sh", "run"]
+CMD ["/opt/kairosdb/bin/kairosdb.sh", "run"]
 
 # Kairos API telnet and jetty ports
 EXPOSE 4242 8083
