@@ -2,7 +2,7 @@
 ## USE 'java -cp tools/tablesaw-1.2.4.jar make docker-image'
 ## TO BUILD.
 
-FROM java:openjdk-8
+FROM openjdk:8u151
 
 ARG VERSION
 
