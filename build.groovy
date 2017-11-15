@@ -498,40 +498,36 @@ def doDocs(Rule rule)
 //---------------------------------------------------------------------------
 //Build container
 dockerBuild = new SimpleRule("docker-build").setDescription("Build a Docker image")
-.addDepend(tarRule)
-.setMakeAction("doDockerBuild")
+        .addDepend(tarRule)
+        .setMakeAction("doDockerBuild")
 
-def doDockerBuild(Rule rule)
-{
-  def tag = getDockerTag()
-  command = "docker build -t ${tag} --build-arg VERSION=${version}-${release} ."
-  saw.exec(command)
+def doDockerBuild(Rule rule) {
+    def tag = getDockerTag()
+    command = "docker build -t ${tag} --build-arg VERSION=${version}-${release} ."
+    saw.exec(command)
 }
 
-def getDockerTag()
-{
+def getDockerTag() {
+    def registry = saw.getProperty("DOCKER_REGISTRY", "");
 
-	def registry = saw.getProperty("DOCKER_REGISTRY", "");
+    if (registry != "") {
+        registry += "/"
+    }
 
-	if ( registry != "" ) {
-		registry += "/"
-	}
-
-  return registry + "${programName}:${version}-${release}"
+    return registry + "${programName}:${version}-${release}"
 
 }
 
 //------------------------------------------------------------------------------
 // Push container
 new SimpleRule("docker-push").setDescription("Push a Docker image to registry")
-.addDepend(dockerBuild)
-.setMakeAction("doDockerPush")
+        .addDepend(dockerBuild)
+        .setMakeAction("doDockerPush")
 
-def doDockerPush(Rule rule)
-{
-  def tag = getDockerTag()
-  command = "docker push ${tag}"
-  saw.exec(command)
+def doDockerPush(Rule rule) {
+    def tag = getDockerTag()
+    command = "docker push ${tag}"
+    saw.exec(command)
 }
 
 //------------------------------------------------------------------------------
