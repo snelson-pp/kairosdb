@@ -6,7 +6,11 @@ FROM openjdk:8u151
 
 ARG VERSION
 
+RUN useradd -M kairosdb
+
 ADD build/kairosdb-${VERSION}.tar /opt/
+
+RUN chown -R kairosdb /opt/kairosdb
 
 WORKDIR /opt/kairosdb
 
@@ -14,6 +18,8 @@ CMD ["/opt/kairosdb/bin/kairosdb.sh", "run"]
 
 # Kairos API telnet and jetty ports
 EXPOSE 4242 8083
+
+USER kairosdb
 
 LABEL maintainer="brianhks1+kairos@gmail.com" \
       org.label-schema.schema-version="1.0" \
